@@ -1,0 +1,109 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #25392B;
+  color: white;
+  text-align: center;
+}
+
+.back-button {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+}
+
+.h1 {
+  background-color: #25392B;
+  color: white;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 100px);
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 1em;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.messages {
+  flex-grow: 1;
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+  overflow-y: auto;
+  display: flex; /* added to reverse the order of messages */
+  flex-direction: column-reverse; /* added to reverse the order of messages */
+}
+
+.messages li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+}
+
+.messages li strong {
+  font-weight: bold;
+}
+
+.input-container {
+  display: flex;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px
+}
+
+.text-input {
+  flex-grow: 1;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+}
+
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+.user-info {
+  background-color: #f5f5f5;
+  padding: 10px;
+  font-size: 14px;
+  text-align: right;
+  color: #777;
+  border-bottom: 1px solid #ddd;
+}
+
+.my-message {
+  background-color: #D2E5A8 !important;
+  align-self: flex-end; /* added to align user's messages to the right */
+  border-color: #a1cb85;
+}
+
+.message {
+  align-self: flex-start;
+}
