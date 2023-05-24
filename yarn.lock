@@ -37,26 +37,26 @@
   "resolved" "https://registry.npmjs.org/@faker-js/faker/-/faker-8.0.1.tgz"
   "version" "8.0.1"
 
-"@gomomento/generated-types-webtext@0.61.2":
-  "integrity" "sha512-rGRWZ1L/2fqUkIXL2072TVWFA6XNPAfi6C03xn35XEHO0ejzPPTA/0iGQuEe5g3H0pby18U/QK7aDHy0Hb2ocw=="
-  "resolved" "https://registry.npmjs.org/@gomomento/generated-types-webtext/-/generated-types-webtext-0.61.2.tgz"
-  "version" "0.61.2"
+"@gomomento/generated-types-webtext@0.62.1":
+  "integrity" "sha512-4NFP8eoHHGY+oDP5WX9Vd7/Yv3DjqmjqyFacLoT5QNIRqZ/EY6MQl2A4V+nR6udQIxitPooLCXb96paIsNiraw=="
+  "resolved" "https://registry.npmjs.org/@gomomento/generated-types-webtext/-/generated-types-webtext-0.62.1.tgz"
+  "version" "0.62.1"
 
-"@gomomento/sdk-core@1.18.0":
-  "integrity" "sha512-9shefK9LDzaBSJJpPdvlaVTF4+bUlX4WXkKa0pA4xK/YQhg0WHFhhgb8U/GdeuZdT1WhPEPOequvV3o9plYqwQ=="
-  "resolved" "https://registry.npmjs.org/@gomomento/sdk-core/-/sdk-core-1.18.0.tgz"
-  "version" "1.18.0"
+"@gomomento/sdk-core@1.21.1":
+  "integrity" "sha512-qcXERyByIy8aRBd/YIPKvqE9/BvfJ2DMbd35FaEzfLBD/2ZpGQrI2LZi2qdQIkyQsnPBzmav7b154nmAEP04aw=="
+  "resolved" "https://registry.npmjs.org/@gomomento/sdk-core/-/sdk-core-1.21.1.tgz"
+  "version" "1.21.1"
   dependencies:
     "buffer" "^6.0.3"
     "jwt-decode" "3.1.2"
 
-"@gomomento/sdk-web@^0.18.0":
-  "integrity" "sha512-AHCcgBoMuw9OgEhQrxXheFN+eh8PG/E8oSJkkg32etuL68PJvajp8Yz1VXbOoaS0usvtbDdWssxTpwfFxqFeKQ=="
-  "resolved" "https://registry.npmjs.org/@gomomento/sdk-web/-/sdk-web-0.18.0.tgz"
-  "version" "0.18.0"
+"@gomomento/sdk-web@^0.21.1":
+  "integrity" "sha512-3cPLMsnr5VTwhoo2GrmfGYOb6CHcNbv9tVyzKrm4nQlmx9jQSchca0koeyhNqieEXlinzuQ/foZNhbQFpduZ1w=="
+  "resolved" "https://registry.npmjs.org/@gomomento/sdk-web/-/sdk-web-0.21.1.tgz"
+  "version" "0.21.1"
   dependencies:
-    "@gomomento/generated-types-webtext" "0.61.2"
-    "@gomomento/sdk-core" "1.18.0"
+    "@gomomento/generated-types-webtext" "0.62.1"
+    "@gomomento/sdk-core" "1.21.1"
     "google-protobuf" "3.21.2"
     "grpc-web" "1.4.2"
     "jwt-decode" "3.1.2"
