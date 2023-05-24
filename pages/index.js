@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { FaPlus } from 'react-icons/fa';
 import Link from 'next/link';
 import { faker } from '@faker-js/faker';
-import { TopicClient, CacheClient, CredentialProvider, NoopMomentoLoggerFactory, CacheSetFetch, CollectionTtl } from '@gomomento/sdk-web';
+import { TopicClient, CacheClient, CredentialProvider, Configurations, CacheSetFetch, CollectionTtl } from '@gomomento/sdk-web';
 
 export default function Home() {
 
@@ -71,7 +71,7 @@ export default function Home() {
 	const initializeCacheClient = () => {
 		if (!cacheClient) {
 			cacheClient = new CacheClient({
-				configuration: { getLoggerFactory: () => new NoopMomentoLoggerFactory() },
+				configuration: Configurations.Browser.v1(),
 				credentialProvider: CredentialProvider.fromString({ authToken: credentials.user.claims.momento.token }),
 				defaultTtlSeconds: 3600
 			});
@@ -83,7 +83,7 @@ export default function Home() {
 	const initializeTopicClient = async () => {
 		if (!topicClient) {
 			topicClient = new TopicClient({
-				configuration: { getLoggerFactory: () => new NoopMomentoLoggerFactory() },
+				configuration: Configurations.Browser.v1(),
 				credentialProvider: CredentialProvider.fromString({ authToken: credentials.user.claims.momento.token })
 			});
 

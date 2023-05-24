@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { FaArrowLeft } from 'react-icons/fa';
 import Head from 'next/head';
 import styles from '../../styles/chat.module.css';
-import { TopicClient, CacheClient, CredentialProvider, NoopMomentoLoggerFactory, CacheListFetch } from '@gomomento/sdk-web';
+import { TopicClient, CacheClient, CredentialProvider, Configurations, CacheListFetch } from '@gomomento/sdk-web';
 
 const Chat = () => {
   const router = useRouter();
@@ -83,7 +83,7 @@ const Chat = () => {
   const initializeCacheClient = () => {
     if (!cacheClient) {
       cacheClient = new CacheClient({
-        configuration: { getLoggerFactory: () => new NoopMomentoLoggerFactory() },
+        configuration: Configurations.Browser.v1(),
         credentialProvider: CredentialProvider.fromString({ authToken: credentials.user.claims.momento.token }),
         defaultTtlSeconds: 3600
       });
@@ -95,7 +95,7 @@ const Chat = () => {
   const initializeTopicClient = async () => {
     if (!topicClient && router.query.room) {
       topicClient = new TopicClient({
-        configuration: { getLoggerFactory: () => new NoopMomentoLoggerFactory() },
+        configuration: Configurations.Browser.v1(),
         credentialProvider: CredentialProvider.fromString({ authToken: credentials.user.claims.momento.token })
       });
 
