@@ -106,7 +106,10 @@ export default function Home() {
 		});
 
 		const token = await response.json();
+		console.log("fetching auth");
 		const userInfoResponse = await fetch(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/userinfo`);
+		//console.log(`userInfoResponse is ${JSON.stringify(await userInfoResponse.json())}`);
+		console.log(`userInfoResponse is ${JSON.stringify(userInfoResponse, null, 2)}`);
 
 		const userInfo = await userInfoResponse.json();
 		const credentials = {
