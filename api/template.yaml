@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS Back-end for Example Chat App
+
+Parameters:  
+  MomentoApiToken:
+    Type: String
+    Description: API token for Momento Cache
+    NoEcho: true
+    Default: ''
+  CacheName:
+    Type: String
+    Description: Name of the cache to use for the chat
+    Default: chat
+
+Globals:
+  Function:
+    Runtime: nodejs18.x 
+    Architectures:
+      - arm64
+    Tracing: Active
+    Timeout: 3
+    MemorySize: 1024
+    Handler: index.handler
+    Environment:
+      Variables:
+        AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+        SECRET_ID: !Ref MomentoSecret
+        CACHE_NAME: !Ref CacheName
+  Api:
+    Cors:
+      AllowMethods: "'GET,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'*'"
+
+Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: api
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: ./openapi.yaml
+  
+  MomentoSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      SecretString:
+        Fn::Sub:
+          - |-
+            {            
+              "momento": "${MomentoApiToken}"
+            }
+          - MomentoApiToken: !Ref MomentoApiToken
+
+  TokenVendingMachineFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/token-vending-machine
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Version: 2012-10-17
+          Statement:            
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: !Ref MomentoSecret
+      Events:
+        AdminApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref Api
+            Path: /tokens
+            Method: GET
+
+Outputs:
+  TokenVendingMachineEndpoint:
+    Description: Use this endpoint to get a limited-scope token via a HTTP GET
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com/api/tokens"

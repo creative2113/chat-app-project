@@ -6,46 +6,12 @@ import { faker } from '@faker-js/faker';
 import { TopicClient, CacheClient, CredentialProvider, Configurations, CacheSetFetch, CollectionTtl } from '@gomomento/sdk-web';
 
 export default function Home() {
-
-	const [topicClient, setTopicClient] = useState(null);
-	const [cacheClient, setCacheClient] = useState(null);
 	const [chatRooms, setChatRooms] = useState([]);
 	const [credentials, setCredentials] = useState(null);
-	const topicClientRef = useRef(topicClient);
-	const cacheClientRef = useRef(cacheClient);
 
-	const updateTopicClient = (client) => {
-		topicClientRef.current = client;
-		setTopicClient(client);
-	};
+	let topicClient;
+	let cacheClient;
 
-	const updateCacheClient = (client) => {
-		cacheClientRef.current = client;
-		setCacheClient(client);
-	};
-
-	useEffect(() => {
-		topicClientRef.current = topicClient;
-	}, [topicClient]);
-
-	useEffect(() => {
-		cacheClientRef.current = cacheClient;
-	}, [cacheClient]);
-
-	useEffect(() => {
-		const storedCredentials = sessionStorage.getItem('credentials');
-		if (storedCredentials) {
-			const creds = JSON.parse(storedCredentials);
-			if (!creds.user?.claims?.momento?.exp || creds.user?.claims?.momento?.exp < Date.now()) {
-				sessionStorage.removeItem('credentials');
-				login();
-			} else {
-				setCredentials(creds);
-			}
-		} else {
-			login();
-		}
-	}, []);
 
 	useEffect(() => {
 		async function setupMomento() {
@@ -58,6 +24,23 @@ export default function Home() {
 			setupMomento();
 		}
 	}, [credentials]);
+
+	const getAuthToken = async () => {
+		const storedCredentials = sessionStorage.getItem('credentials');
+		if (storedCredentials) {
+			const creds = JSON.parse(storedCredentials);
+			if (!creds.exp || creds.exp < Date.now()) {
+				sessionStorage.removeItem('credentials');
+			} else {
+				return creds.token;
+			}
+		}
+
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API}/tokens`);
+		const data = await response.json();
+		sessionStorage.setItem('credentials', JSON.stringify(data));
+		return data.token;
+	};
 
 	const getRoomList = async () => {
 		const roomListResponse = await cacheClientRef.current.setFetch('chat', 'chat-room-list');

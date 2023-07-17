@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Example Chat API
+  version: 1.0.0
+
+x-amazon-apigateway-request-validators:
+  Validate All:
+    validateRequestParameters: true
+    validateRequestBody: true
+x-amazon-apigateway-gateway-responses:
+  BAD_REQUEST_BODY:
+    statusCode: 400
+    responseTemplates:
+      application/json: '{ "message": "$context.error.validationErrorString" }'
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Origin: "'*'"  
+
+paths:
+  /tokens:
+    get:
+      summary: Gets a temporary, limited-scope token for use in a browser
+      tags:
+        - Auth
+      responses:
+        200:
+          description: A token was generated and returned to the caller
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  exp: 
+                    type: Number
+        500:
+          $ref: '#/components/responses/UnknownError'
+      x-amazon-apigateway-request-validator: Validate All
+      x-amazon-apigateway-integration:
+        uri:
+          Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TokenVendingMachineFunction.Arn}/invocations
+        httpMethod: POST
+        type: aws_proxy
+
+  responses:
+    UnknownError:
+      description: An unexpected error occurred on the server.
+      content:
+        application/json:
+          schema:
+            type: object            
+            properties:
+              message:
+                type: string
+                description: Unknown error message
+                example: An unexpected error occurred.
+            required:
+              - message
