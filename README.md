@@ -13,14 +13,6 @@ Momento Chat is a real-time chat application built with Next.js and the Momento 
 
 ![Picture of the different Momento components in play to make the chat work](./public/how-it-works.png)
 
-When a user logs into the application, an auth endpoint is hit to receive a temporary Momento auth token. Once the auth token is received, the application initializes the Momento Web SDK and subscribes to a topic for chat room creation. When a user creates a new chat room, a message will be published to the topic and indicate to all other browsers with the chat room list open to refresh. The browsers will pull from a [Momento set cache item](https://docs.momentohq.com/develop/datatypes#sets) containing the list of chat rooms available. 
-
-When entering a chat room, the browser will first initialize the cache client and pull the chat history from a [Momento list cache item](https://docs.momentohq.com/develop/datatypes#lists). The list contains an ordered sequence of all messages sent in that chat room. After the chat history is fetched, it subscribes to the chat topic to be notified when a new message is sent. When a message is sent, the topic `onItem` event handler is triggered and it will add the new message to the view.
-
-When a message is sent, the browser will publish to the chat topic and push the message to the list cache item in order to maintain the chat history. 
-
-After 1 hour, the room and chat history will expire and be automatically deleted from the cache.
-
 ## Authentication
 
 Authentication is a crucial part of this application. It ensures that only authorized users can access the chat services, and also provides a mechanism for controlling the scope of actions that a user can perform.
