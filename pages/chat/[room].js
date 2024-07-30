@@ -16,7 +16,7 @@ const Chat = () => {
   const topicClientRef = useRef(topicClient);
   const cacheClientRef = useRef(cacheClient);
   const messagesRef = useRef(messages);
-  const chatWindowRef = useRef(null);
+  const chatWindowsRef = useRef(null);
 
   const updateTopicClient = (client) => {
     topicClientRef.current = client;
@@ -44,8 +44,8 @@ const Chat = () => {
 
   useEffect(() => {
     messagesRef.current = messages;
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (chatWindowsRef.current) {
+      chatWindowsRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
 
@@ -150,7 +150,7 @@ const Chat = () => {
             </li>
           ))}
         </ul>
-        <div ref={chatWindowRef} />
+        <div ref={chatWindowsRef} />
         <div className={styles['user-info']}>You are logged in as {name}</div>
         <div className={styles['input-container']}>
           <input
